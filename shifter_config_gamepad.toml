@@ -5,50 +5,56 @@ motor_ports = ["A", "C"]
 
 [gears]
 [gears.0]
-    type      = "independent"
     [gears.0.A]
+        type      = "independent"
         max_power = 50
         max_speed = 100
         sign      = 1
         forward   = "right"
         backward  = "bottom"
     [gears.0.C]
+        type      = "independent"
         max_power = 50
         max_speed = 100
         sign      = 1
         forward   = "top"
         backward  = "left"
 [gears.1]
-    type      = "independent"
     [gears.1.A]
+        type      = "independent"
         max_power = 50
         max_speed = 100
         sign      = 1
         forward   = "right"
         backward  = "bottom"
     [gears.1.C]
-        max_power = 50
-        max_speed = 100
-        sign      = 1
-        forward   = "top"
-        backward  = "left"
-[gears.2]
-    type      = "independent"
-    [gears.2.A]
-        max_power = 50
-        max_speed = 100
-        sign      = 1
-        forward   = "right"
-        backward  = "bottom"
-    [gears.2.C]
+        type      = "independent"
         max_power = 50
         max_speed = 100
         sign      = 1
         forward   = "top"
         backward  = "left"
 [gears.3]
-    type      = "tank"
-    max_power = 100
-    max_speed = 100
-    signs     = [-1, -1]
-    controls  = [["axis_left_right", "axis_top_bottom"]]
+    [gears.3.A]
+        type      = "independent"
+        max_power = 50
+        max_speed = 100
+        sign      = 1
+        forward   = "right"
+        backward  = "bottom"
+    [gears.3.C]
+        type      = "independent"
+        max_power = 50
+        max_speed = 100
+        sign      = 1
+        forward   = "top"
+        backward  = "left"
+[gears.2]
+    [gears.2.A]
+        type      = "tank"
+        partner   = "C"
+        side      = "left"
+        max_power = 100
+        max_speed = 100
+        sign      = 1
+        partner_sign = 1
