@@ -10,6 +10,9 @@ class shifter_calibrate:
     def get_topic(self):
         return 'shifter/calibrate'
 
+    def get_topic_static():
+        return 'shifter/calibrate'
+
     def from_dict(input_dict):
         return shifter_calibrate(
         )
@@ -26,9 +29,13 @@ class shifter_shift:
     def get_topic(self):
         return 'shifter/shift'
 
+    def get_topic_static():
+        return 'shifter/shift'
+
     def from_dict(input_dict):
+        gear = input_dict['gear']
         return shifter_shift(
-            input_dict['gear'],
+            gear,
         )
 
 class shifter_shift_up:
@@ -40,6 +47,9 @@ class shifter_shift_up:
         return ret
 
     def get_topic(self):
+        return 'shifter/shift_up'
+
+    def get_topic_static():
         return 'shifter/shift_up'
 
     def from_dict(input_dict):
@@ -55,6 +65,9 @@ class shifter_shift_down:
         return ret
 
     def get_topic(self):
+        return 'shifter/shift_down'
+
+    def get_topic_static():
         return 'shifter/shift_down'
 
     def from_dict(input_dict):

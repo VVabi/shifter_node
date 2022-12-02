@@ -1,4 +1,4 @@
-from motor_node_messages import *
+from protocol.motor_messages import *
 import time
 
 class PoweredupMotor():

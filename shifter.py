@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 import json
-from motor_node_messages import *
+from protocol.motor_messages import *
 import time
 import numpy as np
 from poweredup_motor import PoweredupMotor

@@ -17,9 +17,11 @@ class ContinuousGamepadButton:
         return 'gamepad/continuous'
 
     def from_dict(input_dict):
+        button_name = input_dict['button_name']
+        value = input_dict['value']
         return ContinuousGamepadButton(
-            input_dict['button_name'],
-            input_dict['value'],
+            button_name,
+            value,
         )
 
 class DiscreteGamepadButton:
@@ -40,9 +42,10 @@ class DiscreteGamepadButton:
         return 'gamepad/discrete'
 
     def from_dict(input_dict):
+        button_name = input_dict['button_name']
+        value = input_dict['value']
         return DiscreteGamepadButton(
-            input_dict['button_name'],
-            input_dict['value'],
+            button_name,
+            value,
         )
-
 

@@ -28,10 +28,15 @@ class SetMotorPwm:
     def get_topic(self):
         return 'brickcontrol/motor/pwm'
 
+    def get_topic_static():
+        return 'brickcontrol/motor/pwm'
+
     def from_dict(input_dict):
+        pwm = input_dict['pwm']
+        port = Port[input_dict['port']]
         return SetMotorPwm(
-            input_dict['pwm'],
-            Port[input_dict['port']],
+            pwm,
+            port,
         )
 
 class SetMotorSpeed:
@@ -50,11 +55,17 @@ class SetMotorSpeed:
     def get_topic(self):
         return 'brickcontrol/motor/set_speed'
 
+    def get_topic_static():
+        return 'brickcontrol/motor/set_speed'
+
     def from_dict(input_dict):
+        pwm = input_dict['pwm']
+        port = Port[input_dict['port']]
+        max_power = input_dict['max_power']
         return SetMotorSpeed(
-            input_dict['pwm'],
-            Port[input_dict['port']],
-            input_dict['max_power'],
+            pwm,
+            port,
+            max_power,
         )
 
 class MotorGoToPosition:
@@ -75,12 +86,19 @@ class MotorGoToPosition:
     def get_topic(self):
         return 'brickcontrol/motor/go_to_position'
 
+    def get_topic_static():
+        return 'brickcontrol/motor/go_to_position'
+
     def from_dict(input_dict):
+        pwm = input_dict['pwm']
+        port = Port[input_dict['port']]
+        max_power = input_dict['max_power']
+        target_angle = input_dict['target_angle']
         return MotorGoToPosition(
-            input_dict['pwm'],
-            Port[input_dict['port']],
-            input_dict['max_power'],
-            input_dict['target_angle'],
+            pwm,
+            port,
+            max_power,
+            target_angle,
         )
 
 class MotorCommandFeedback:
@@ -97,10 +115,15 @@ class MotorCommandFeedback:
     def get_topic(self):
         return 'brickcontrol/motor/output/command_feedback'
 
+    def get_topic_static():
+        return 'brickcontrol/motor/output/command_feedback'
+
     def from_dict(input_dict):
+        port = Port[input_dict['port']]
+        flags = input_dict['flags']
         return MotorCommandFeedback(
-            Port[input_dict['port']],
-            input_dict['flags'],
+            port,
+            flags,
         )
 
 class EnableModeUpdates:
@@ -121,12 +144,19 @@ class EnableModeUpdates:
     def get_topic(self):
         return 'brickcontrol/generic/set_mode_update'
 
+    def get_topic_static():
+        return 'brickcontrol/generic/set_mode_update'
+
     def from_dict(input_dict):
+        port = Port[input_dict['port']]
+        mode = input_dict['mode']
+        notifications_enabled = input_dict['notifications_enabled']
+        delta = input_dict['delta']
         return EnableModeUpdates(
-            Port[input_dict['port']],
-            input_dict['mode'],
-            input_dict['notifications_enabled'],
-            input_dict['delta'],
+            port,
+            mode,
+            notifications_enabled,
+            delta,
         )
 
 class MotorPositionUpdate:
@@ -143,10 +173,15 @@ class MotorPositionUpdate:
     def get_topic(self):
         return 'brickcontrol/motor/output/position_update'
 
+    def get_topic_static():
+        return 'brickcontrol/motor/output/position_update'
+
     def from_dict(input_dict):
+        position = input_dict['position']
+        port = Port[input_dict['port']]
         return MotorPositionUpdate(
-            input_dict['position'],
-            Port[input_dict['port']],
+            position,
+            port,
         )
 
 class RequestBatteryStatus:
@@ -158,6 +193,9 @@ class RequestBatteryStatus:
         return ret
 
     def get_topic(self):
+        return 'brickcontrol/battery/request_status'
+
+    def get_topic_static():
         return 'brickcontrol/battery/request_status'
 
     def from_dict(input_dict):
@@ -176,9 +214,13 @@ class BatteryStatus:
     def get_topic(self):
         return 'brickcontrol/battery/status'
 
+    def get_topic_static():
+        return 'brickcontrol/battery/status'
+
     def from_dict(input_dict):
+        charging_state = input_dict['charging_state']
         return BatteryStatus(
-            input_dict['charging_state'],
+            charging_state,
         )
 
 class AttachmentInfo:
@@ -197,18 +239,24 @@ class AttachmentInfo:
     def get_topic(self):
         return 'unused'
 
+    def get_topic_static():
+        return 'unused'
+
     def from_dict(input_dict):
+        type_id = input_dict['type_id']
+        hw_rev = input_dict['hw_rev']
+        sw_rev = input_dict['sw_rev']
         return AttachmentInfo(
-            input_dict['type_id'],
-            input_dict['hw_rev'],
-            input_dict['sw_rev'],
+            type_id,
+            hw_rev,
+            sw_rev,
         )
 
 class AttachedIo:
     def __init__(self, port_id, event, info):
         self.port_id = port_id #uint8
         self.event = event #uint8
-        self.info = info #struct:AttachmentInfo
+        self.info = info #list:struct:AttachmentInfo
 
     def to_dict(self):
         ret = dict()
@@ -220,11 +268,17 @@ class AttachedIo:
     def get_topic(self):
         return 'brickcontrol/io/connection_update'
 
+    def get_topic_static():
+        return 'brickcontrol/io/connection_update'
+
     def from_dict(input_dict):
+        port_id = input_dict['port_id']
+        event = input_dict['event']
+        info = AttachmentInfo.from_dict(input_dict['info'])
         return AttachedIo(
-            input_dict['port_id'],
-            input_dict['event'],
-            AttachmentInfo.from_dict(input_dict['info']),
+            port_id,
+            event,
+            info,
         )
 
 class PortInformationRequest:
@@ -239,8 +293,12 @@ class PortInformationRequest:
     def get_topic(self):
         return 'brickcontrol/generic/read_port'
 
+    def get_topic_static():
+        return 'brickcontrol/generic/read_port'
+
     def from_dict(input_dict):
+        port_id = input_dict['port_id']
         return PortInformationRequest(
-            input_dict['port_id'],
+            port_id,
         )
 

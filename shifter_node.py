@@ -1,8 +1,8 @@
 import toml
 from utils import BetterMqttClient
 from shifter import Shifter
-from gamepad_messages import *
-from motor_node_messages import *
+from protocol.gamepad_node_messages import *
+from protocol.motor_messages import *
 import time
 import queue
 from poweredup_motor import PoweredupMotor
