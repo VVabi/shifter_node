@@ -6,6 +6,23 @@ from protocol.motor_messages import *
 import time
 import queue
 from poweredup_motor import PoweredupMotor
+global battery_status
+
+def wait_for_hub_online(client):
+    def battery_status_cb(topic, message_dict):
+        msg = BatteryStatus.from_dict(message_dict)
+        global battery_status
+        battery_status = msg.charging_state
+
+    client.register_callback(BatteryStatus.get_topic_static(), battery_status_cb)
+    global battery_status
+    battery_status = -1
+    while battery_status < 0:
+        client.publish_message(RequestBatteryStatus())
+        time.sleep(0.5)
+
+    time.sleep(1)
+    print("HUB is online")
 
 def get_key_from_gamepad_discrete(button_name, value):
     return f"{button_name}:{value}"
@@ -27,7 +44,7 @@ class ShifterNode():
             motor.run_at_speed(self.client, 0, 100)
             self.motors[Port[port]] = motor
 
-
+        wait_for_hub_online(self.client)
         self.shifter = Shifter(Port[self.config_dict["shifter_port"]], self.client)
         self.shifter.calibrate(self.client)
         if self.config_dict["control_type"] == "gamepad_direct":
@@ -119,7 +136,7 @@ class ShifterNode():
                     self.gamepad_handler_map_by_gear[full_key](self.client)
 
 
-nd = ShifterNode("shifter_config_gamepad.toml", "localhost")
+nd = ShifterNode("shifter_config_gamepad.toml", "10.0.0.36")
 nd.run()
 
 
