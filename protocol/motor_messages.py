@@ -14,6 +14,27 @@ class Port(enum.Enum):
     C = 2
     D = 3
 
+class RegisterMotor:
+    def __init__(self, port):
+        self.port = port #enum:Port
+
+    def to_dict(self):
+        ret = dict()
+        ret['port'] = self.port.name
+        return ret
+
+    def get_topic(self):
+        return 'brickcontrol/motor/register'
+
+    def get_topic_static():
+        return 'brickcontrol/motor/register'
+
+    def from_dict(input_dict):
+        port = Port[input_dict['port']]
+        return RegisterMotor(
+            port,
+        )
+
 class SetMotorPwm:
     def __init__(self, pwm, port):
         self.pwm = pwm #int8
@@ -40,14 +61,14 @@ class SetMotorPwm:
         )
 
 class SetMotorSpeed:
-    def __init__(self, pwm, port, max_power):
-        self.pwm = pwm #int8
+    def __init__(self, speed, port, max_power):
+        self.speed = speed #int8
         self.port = port #enum:Port
         self.max_power = max_power #uint8
 
     def to_dict(self):
         ret = dict()
-        ret['pwm'] = self.pwm
+        ret['speed'] = self.speed
         ret['port'] = self.port.name
         ret['max_power'] = self.max_power
         return ret
@@ -59,25 +80,25 @@ class SetMotorSpeed:
         return 'brickcontrol/motor/set_speed'
 
     def from_dict(input_dict):
-        pwm = input_dict['pwm']
+        speed = input_dict['speed']
         port = Port[input_dict['port']]
         max_power = input_dict['max_power']
         return SetMotorSpeed(
-            pwm,
+            speed,
             port,
             max_power,
         )
 
 class MotorGoToPosition:
-    def __init__(self, pwm, port, max_power, target_angle):
-        self.pwm = pwm #int8
+    def __init__(self, speed, port, max_power, target_angle):
+        self.speed = speed #int8
         self.port = port #enum:Port
         self.max_power = max_power #uint8
         self.target_angle = target_angle #int32
 
     def to_dict(self):
         ret = dict()
-        ret['pwm'] = self.pwm
+        ret['speed'] = self.speed
         ret['port'] = self.port.name
         ret['max_power'] = self.max_power
         ret['target_angle'] = self.target_angle
@@ -90,12 +111,12 @@ class MotorGoToPosition:
         return 'brickcontrol/motor/go_to_position'
 
     def from_dict(input_dict):
-        pwm = input_dict['pwm']
+        speed = input_dict['speed']
         port = Port[input_dict['port']]
         max_power = input_dict['max_power']
         target_angle = input_dict['target_angle']
         return MotorGoToPosition(
-            pwm,
+            speed,
             port,
             max_power,
             target_angle,

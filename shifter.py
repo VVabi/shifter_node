@@ -16,10 +16,12 @@ class Shifter():
         self.locked             = False
 
     def calibrate(self, client):
-        self.motor.go_to_position_blocking(client, 30, 60, 1000)
-        self.motor.go_to_position_blocking(client, 30, 60, -1000)
+        self.motor.go_to_position_blocking(client, 10, 60, 1000)
+        self.motor.go_to_position_blocking(client, 10, 60, -1000)
 
         time.sleep(1) # necessary because current angle may not be up to date
+        self.motor.go_to_position_blocking(client, 10, 60, self.motor.ticks-10)
+        time.sleep(1)
         self.shift_start_angle = self.motor.ticks
         self.gear = 0
         self.calibrated = True

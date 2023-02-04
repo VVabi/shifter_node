@@ -1,60 +1,74 @@
 control_type = 'gamepad_direct'
 
+[shifter]
 shifter_port = "B"
 motor_ports = ["A", "C"]
-
-[gears]
-[gears.0]
-    [gears.0.A]
+[shifter.gears]
+[shifter.gears.0]
+    [shifter.gears.0.A]
         type      = "independent"
         max_power = 50
         max_speed = 100
         sign      = 1
         forward   = "right"
         backward  = "bottom"
-    [gears.0.C]
+    [shifter.gears.0.C]
         type      = "independent"
         max_power = 50
         max_speed = 100
         sign      = 1
         forward   = "top"
         backward  = "left"
-[gears.1]
-    [gears.1.A]
+[shifter.gears.1]
+    [shifter.gears.1.A]
         type      = "independent"
         max_power = 50
         max_speed = 100
         sign      = 1
         forward   = "right"
         backward  = "bottom"
-    [gears.1.C]
+    [shifter.gears.1.C]
         type      = "independent"
         max_power = 50
         max_speed = 100
         sign      = 1
         forward   = "top"
         backward  = "left"
-[gears.3]
-    [gears.3.A]
+[shifter.gears.3]
+    [shifter.gears.3.A]
         type      = "independent"
         max_power = 50
         max_speed = 100
         sign      = 1
         forward   = "right"
         backward  = "bottom"
-    [gears.3.C]
+    [shifter.gears.3.C]
         type      = "independent"
         max_power = 50
         max_speed = 100
         sign      = 1
         forward   = "top"
         backward  = "left"
-[gears.2]
-    [gears.2.A]
-        type      = "tank"
-        partner   = "C"
-        side      = "left"
-        max_power = 100
+[shifter.gears.2]
+    [shifter.gears.2.A]
+        type      = "independent"
+        max_power = 50
         max_speed = 100
         sign      = 1
-        partner_sign = 1
+        forward   = "right"
+        backward  = "bottom"
+    [shifter.gears.2.C]
+        type      = "independent"
+        max_power = 50
+        max_speed = 100
+        sign      = 1
+        forward   = "top"
+        backward  = "left"
+    #[gears.2.A]
+    #    type      = "tank"
+    #    partner   = "C"
+    #    side      = "left"
+    #    max_power = 100
+    #    max_speed = 100
+    #    sign      = 1
+    #    partner_sign = 1

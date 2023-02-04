@@ -19,6 +19,10 @@ class PoweredupMotor():
         if message.port == self.port:
             self.ticks = message.position
 
+    def register(self, client):
+        message = RegisterMotor(port=self.port)
+        client.publish_message(message)
+
     def on_motor_flags_update(self, topic, payload):
         message = MotorCommandFeedback.from_dict(payload)
 
@@ -41,5 +45,6 @@ class PoweredupMotor():
         self.flags = []
 
     def run_at_speed(self, client, speed, max_power):
-        message = SetMotorSpeed(pwm=speed, port = self.port, max_power=max_power)
+        #message = SetMotorSpeed(speed=speed, port = self.port, max_power=max_power)
+        message = SetMotorPwm(port=self.port, pwm=speed) #TODO
         client.publish_message(message)

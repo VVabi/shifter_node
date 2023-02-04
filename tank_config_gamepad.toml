@@ -1,0 +1,13 @@
+control_type = 'gamepad_direct'
+
+[direct_motors]
+motor_ports = ["A", "D"]
+[direct_motors.motors]
+[direct_motors.motors.A]
+    type      = "tank"
+    partner   = "D"
+    side      = "right"
+    max_power = 50
+    max_speed = 50
+    sign      = 1
+    partner_sign = 1
