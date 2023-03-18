@@ -7,14 +7,14 @@ motor_ports = ["A", "C"]
 [shifter.gears.0]
     [shifter.gears.0.A]
         type      = "independent"
-        max_power = 50
+        max_power = 100
         max_speed = 100
         sign      = 1
         forward   = "right"
         backward  = "bottom"
     [shifter.gears.0.C]
         type      = "independent"
-        max_power = 50
+        max_power = 100
         max_speed = 100
         sign      = 1
         forward   = "top"
@@ -22,44 +22,38 @@ motor_ports = ["A", "C"]
 [shifter.gears.1]
     [shifter.gears.1.A]
         type      = "independent"
-        max_power = 50
+        max_power = 100
         max_speed = 100
         sign      = 1
         forward   = "right"
         backward  = "bottom"
     [shifter.gears.1.C]
         type      = "independent"
-        max_power = 50
-        max_speed = 100
-        sign      = 1
-        forward   = "top"
-        backward  = "left"
-[shifter.gears.3]
-    [shifter.gears.3.A]
-        type      = "independent"
-        max_power = 50
-        max_speed = 100
-        sign      = 1
-        forward   = "right"
-        backward  = "bottom"
-    [shifter.gears.3.C]
-        type      = "independent"
-        max_power = 50
+        max_power = 100
         max_speed = 100
         sign      = 1
         forward   = "top"
         backward  = "left"
 [shifter.gears.2]
     [shifter.gears.2.A]
+        type      = "tank"
+        partner   = "C"
+        side      = "right"
+        max_power = 100
+        max_speed = 100
+        sign      = -1
+        partner_sign = 1
+[shifter.gears.3]
+    [shifter.gears.3.A]
         type      = "independent"
-        max_power = 50
+        max_power = 100
         max_speed = 100
         sign      = 1
         forward   = "right"
         backward  = "bottom"
-    [shifter.gears.2.C]
+    [shifter.gears.3.C]
         type      = "independent"
-        max_power = 50
+        max_power = 100
         max_speed = 100
         sign      = 1
         forward   = "top"

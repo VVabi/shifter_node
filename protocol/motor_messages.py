@@ -60,6 +60,31 @@ class SetMotorPwm:
             port,
         )
 
+class SetMotorPwmMultiple:
+    def __init__(self, motor_pwms):
+        self.motor_pwms = motor_pwms #list:struct:SetMotorPwm
+
+    def to_dict(self):
+        ret = dict()
+        ret['motor_pwms'] = []
+        for data_point in self.motor_pwms:
+            ret['motor_pwms'].append(data_point.to_dict())
+        return ret
+
+    def get_topic(self):
+        return 'brickcontrol/motor/pwm_multiple'
+
+    def get_topic_static():
+        return 'brickcontrol/motor/pwm_multiple'
+
+    def from_dict(input_dict):
+        motor_pwms = []
+        for data_point in input_dict['motor_pwms']:
+            motor_pwms.append(SetMotorPwm.from_dict(data_point))
+        return SetMotorPwmMultiple(
+            motor_pwms,
+        )
+
 class SetMotorSpeed:
     def __init__(self, speed, port, max_power):
         self.speed = speed #int8
@@ -283,7 +308,9 @@ class AttachedIo:
         ret = dict()
         ret['port_id'] = self.port_id
         ret['event'] = self.event
-        ret['info'] = self.info.to_dict()
+        ret['info'] = []
+        for data_point in self.info:
+            ret['info'].append(data_point.to_dict())
         return ret
 
     def get_topic(self):
@@ -295,7 +322,9 @@ class AttachedIo:
     def from_dict(input_dict):
         port_id = input_dict['port_id']
         event = input_dict['event']
-        info = AttachmentInfo.from_dict(input_dict['info'])
+        info = []
+        for data_point in input_dict['info']:
+            info.append(AttachmentInfo.from_dict(data_point))
         return AttachedIo(
             port_id,
             event,

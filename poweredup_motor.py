@@ -6,12 +6,12 @@ class PoweredupMotor():
         self.ticks = 0
         self.port = port
         self.flags = []
-        client.register_callback(MotorCommandFeedback(0, 0).get_topic(), self.on_motor_flags_update) #TODO
+        client.register_callback(MotorCommandFeedback.get_topic_static(), self.on_motor_flags_update) #TODO
 
         if enable_position_updates:
             enable_mode_update = EnableModeUpdates(self.port, 2, 1, 5)
             client.publish_message(enable_mode_update)
-            client.register_callback(MotorPositionUpdate(0, 0).get_topic(), self.on_angle_delta_update)
+            client.register_callback(MotorPositionUpdate.get_topic_static(), self.on_angle_delta_update)
 
     def on_angle_delta_update(self, topic, payload):
         message = MotorPositionUpdate.from_dict(payload)
@@ -46,5 +46,10 @@ class PoweredupMotor():
 
     def run_at_speed(self, client, speed, max_power):
         #message = SetMotorSpeed(speed=speed, port = self.port, max_power=max_power)
-        message = SetMotorPwm(port=self.port, pwm=speed) #TODO
+        message = self.get_run_at_speed_msg(speed, max_power)
         client.publish_message(message)
+
+    def get_run_at_speed_msg(self, speed, max_power):
+        message = SetMotorSpeed(speed=speed, port = self.port, max_power=max_power)
+        #message = SetMotorPwm(port=self.port, pwm=speed) #TODO
+        return message

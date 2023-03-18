@@ -103,9 +103,12 @@ class ShifterNode():
             key_pressed_right_left_stop             = f'{get_key_from_gamepad_discrete("axis_left_right", "released")}'
 
         def run_tank(client, motor_1_sign, motor_2_sign):
-            self.motors[port].run_at_speed(client, motor_1_sign*motor_config["max_speed"]*motor_config["sign"], motor_config["max_power"])
-            self.motors[other_port].run_at_speed(client, motor_2_sign*motor_config["max_speed"]*motor_config["partner_sign"], motor_config["max_power"])
-
+            a = self.motors[port].get_run_at_speed_msg(motor_1_sign*motor_config["max_speed"]*motor_config["sign"], motor_config["max_power"])
+            b = self.motors[other_port].get_run_at_speed_msg(motor_2_sign*motor_config["max_speed"]*motor_config["partner_sign"], motor_config["max_power"])
+            #client.publish_message(SetMotorPwmMultiple([a,b])) TODO implement in brick_control client!
+            client.publish_message(a)
+            client.publish_message(b)
+        
         self.gamepad_handler_map[key_pressed_forward] = GamepadInputHandle(lambda client: run_tank(client, 1, 1), False)
         self.gamepad_handler_map[key_pressed_backward] = GamepadInputHandle(lambda client: run_tank(client, -1, -1), False)
         self.gamepad_handler_map[key_pressed_forward_backward_stop] = GamepadInputHandle(lambda client: run_tank(client, 0, 0), False)
